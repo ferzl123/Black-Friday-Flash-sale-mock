@@ -1,1 +1,1 @@
-# Black-Friday-Flash-sale-mock
+# MockSecKill
