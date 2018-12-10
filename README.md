@@ -1,0 +1,1 @@
+# Black-Friday-Flash-sale-mock
