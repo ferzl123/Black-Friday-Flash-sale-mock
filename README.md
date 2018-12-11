@@ -56,3 +56,31 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 123
 ```
+4 services corresponding to 4 docker containers: ZooKeeper, Kafka, Redis, MySQL
+
+* KAFKA_ADVERTISED_HOST_NAME: need to be changed to local IP from ```ipconfig```
+* MYSQL_ROOT_PASSWORD: from personal pc
+
+start the docker, and compose them up automatically by Docker
+```
+cd ./path
+docker-compose up
+```
+
+* Create the topic in Kafka: CAR_NUMBER
+* Create Counter in redis(value: 100, intial stock 100)
+* Create the table(a self-increment ID fieldt and a timestamp-format data field)
+
+# Code
+
+
+
+
+
+
+# Action steps
+
+* start docker container
+* start service
+* start kafka consumer
+* start JMeter request
