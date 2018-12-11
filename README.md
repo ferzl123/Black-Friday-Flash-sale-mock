@@ -13,11 +13,11 @@ Simulated a situation when web service receiving large-volume of requests in a s
 ## JMeter
 
 Create a thread group with 2000 numbers of threads(users) in 5 seconds
->New a Http Requests sampler with 
-Host name: localhost 
-Port number: 3000
-HTTP Method: Post
-request Path: /mock/mock
+* New a Http Requests sampler with 
+* Host name: localhost 
+* Port number: 3000
+* HTTP Method: Post
+* request Path: /mock/mock
 
 ## Redis, Kafka, ZooKeeper, MySQL in docker environment
 Install dokcer engine, docker machine, docker comose
