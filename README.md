@@ -23,6 +23,8 @@ Create a thread group with 2000 numbers of threads(users) in 5 seconds
 
 Install dokcer engine, docker machine, docker comose
 
+###Kafka and ZooKeeper
+
 Kafka are necessary with ZooKeeper, so build them together
 
 ```bash
@@ -50,4 +52,34 @@ create consumer
 bin/kafka-console-consumer.sh --zookeeper zookeeper:2181 --topic mykafka --from-beginning
 
 ```
-
+dokcer configuration
+```
+version: '2'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka
+    links:
+      - zookeeper:zk
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 10.18.129.58
+      KAFKA_ADVERTISED_PORT: "9092"
+      KAFKA_ZOOKEEPER_CONNECT: zk:2181
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+  mysql:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+```
