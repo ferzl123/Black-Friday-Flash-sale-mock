@@ -133,6 +133,17 @@ router.post('/seckill', function (req, res) {
 module.exports = router;
 ```
 
+1-8，，Node.js MVC framework with Express and Redis and Kafka
+10，利用Express提供的方法暴露出一个path为/seckill的POST方法。
+第12行，定义了一个方法，在54行会调用。
+第13-22行，新建了一个redis client并且监听error事件。
+第23行，这行代码非常关键，它的作用是让redis client监视Redis中的counter值，之后会启动一个事务，如果在事务提交的时候发现有其它client修改了counter值的话，就会放弃这个事务。
+第24行，通过redis client的异步方法获取counter的值，因为redis的get操作是原子的，所以在这里不用担心有并发读写的问题。
+第25-28行，判断返回的库存值是否大于0，如果大于0，通过client.multi()启动一个事务，通过decr()方法将counter值减1，最后通过exec()方法提交事务；如果小于0，则执行第47行，打印卖完了并且关闭redis client。
+第29-46行，这里我们看一下multi.exec()中的这个回调方法。在前面我们已经使用watch对counter进行了监视。如果在事务提交过程中有其它client修改了counter值的话，回调方法中的replies参数就会是null，可以看到第29-31行，程序会打印“可能有冲突”并且再次调用fn方法重试。
+
+如果replies的值不为null，就会使用kafka的producer发送一条message到CAR_NUMBER topic。
+
 
 
 
